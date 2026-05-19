@@ -1,0 +1,167 @@
+config:
+  clusterTier: CLUSTER_TIER_STANDARD
+  configBucket: dataproc-staging-us-central1-1018711634531-cdtv7hlv
+  endpointConfig:
+    enableHttpPortAccess: true
+    httpPorts:
+      HDFS NameNode: https://oyhrn4tyiza7zgv2ymxh65hgre-dot-us-central1.dataproc.googleusercontent.com/hdfs/dfshealth.html
+      MapReduce Job History: https://oyhrn4tyiza7zgv2ymxh65hgre-dot-us-central1.dataproc.googleusercontent.com/jobhistory/
+      Spark History Server: https://oyhrn4tyiza7zgv2ymxh65hgre-dot-us-central1.dataproc.googleusercontent.com/sparkhistory/
+      Tez: https://oyhrn4tyiza7zgv2ymxh65hgre-dot-us-central1.dataproc.googleusercontent.com/apphistory/tez-ui/
+      YARN Application Timeline: https://oyhrn4tyiza7zgv2ymxh65hgre-dot-us-central1.dataproc.googleusercontent.com/apphistory/
+      YARN ResourceManager: https://oyhrn4tyiza7zgv2ymxh65hgre-dot-us-central1.dataproc.googleusercontent.com/yarn/
+  gceClusterConfig:
+    internalIpOnly: true
+    metadata:
+      db-hive-password: Npg[QeYmnppVx%Km5mux
+      db-hive-user: ipaas
+      enable-cloud-sql-proxy-on-workers: 'false'
+      hive-metastore-db: ipaas-fdev-indmns1
+      hive-metastore-instance: edl-idaas-fdev-platform-2c85:us-central1:ipaas-fdev-hive-metastore-56tg
+      metastore-proxy-host: dataproc-proxy-bridge-edl-fdev-usc1
+      metastore-proxy-port: '3308'
+    serviceAccount: svc-fdev-idaas-data-munge@edl-idaas-fdev-platform-2c85.iam.gserviceaccount.com
+    serviceAccountScopes:
+    - https://www.googleapis.com/auth/bigquery
+    - https://www.googleapis.com/auth/bigtable.admin.table
+    - https://www.googleapis.com/auth/bigtable.data
+    - https://www.googleapis.com/auth/cloud-platform
+    - https://www.googleapis.com/auth/cloud.useraccounts.readonly
+    - https://www.googleapis.com/auth/devstorage.full_control
+    - https://www.googleapis.com/auth/devstorage.read_write
+    - https://www.googleapis.com/auth/logging.write
+    - https://www.googleapis.com/auth/spanner.data
+    - https://www.googleapis.com/auth/sqlservice.admin
+    shieldedInstanceConfig:
+      enableIntegrityMonitoring: true
+      enableSecureBoot: true
+      enableVtpm: true
+    subnetworkUri: https://www.googleapis.com/compute/v1/projects/edl-idaas-fdev-platform-2c85/regions/us-central1/subnetworks/neustar-local-usc1-edl-subnet-dataproc1
+    zoneUri: https://www.googleapis.com/compute/v1/projects/edl-idaas-fdev-platform-2c85/zones/us-central1-a
+  initializationActions:
+  - executableFile: gs://fdev-indmns1-scripts/cloud-sql-proxy_ssl.sh
+    executionTimeout: 600s
+  lifecycleConfig:
+    idleDeleteTtl: 300s
+  masterConfig:
+    diskConfig:
+      bootDiskSizeGb: 1024
+      bootDiskType: pd-ssd
+    imageUri: https://www.googleapis.com/compute/v1/projects/cloud-dataproc/global/images/dataproc-3-0-deb12-20250830-034623-rc01
+    machineTypeUri: https://www.googleapis.com/compute/v1/projects/edl-idaas-fdev-platform-2c85/zones/us-central1-a/machineTypes/t2d-standard-16
+    minCpuPlatform: AUTOMATIC
+    numInstances: 1
+    preemptibility: NON_PREEMPTIBLE
+  secondaryWorkerConfig:
+    diskConfig:
+      bootDiskSizeGb: 512
+      bootDiskType: pd-ssd
+    imageUri: https://www.googleapis.com/compute/v1/projects/cloud-dataproc/global/images/dataproc-3-0-deb12-20250830-034623-rc01
+    instanceFlexibilityPolicy:
+      instanceMachineTypes:
+        w500003-c00003-00001-sw-p9z3: t2d-standard-16
+        w500003-c00003-00001-sw-r0k9: t2d-standard-16
+      instanceSelectionList:
+      - machineTypes:
+        - t2d-standard-16
+      instanceSelectionResults:
+      - machineType: t2d-standard-16
+        vmCount: 2
+    minCpuPlatform: AUTOMATIC
+    numInstances: 2
+    preemptibility: PREEMPTIBLE
+  softwareConfig:
+    imageVersion: 3.0.0-RC1-debian12
+    properties:
+      capacity-scheduler:yarn.scheduler.capacity.root.default.ordering-policy: fair
+      core:fs.gs.block.size: '134217728'
+      core:fs.gs.metadata.cache.enable: 'false'
+      core:hadoop.ssl.enabled.protocols: TLSv1,TLSv1.1,TLSv1.2
+      dataproc:dataproc.logging.stackdriver.job.driver.enable: 'true'
+      distcp:mapreduce.map.java.opts: -Xmx768m
+      distcp:mapreduce.map.memory.mb: '1024'
+      distcp:mapreduce.reduce.java.opts: -Xmx768m
+      distcp:mapreduce.reduce.memory.mb: '1024'
+      hadoop-env:HADOOP_DATANODE_OPTS: -Xmx512m
+      hdfs:dfs.datanode.address: 0.0.0.0:9866
+      hdfs:dfs.datanode.http.address: 0.0.0.0:9864
+      hdfs:dfs.datanode.https.address: 0.0.0.0:9865
+      hdfs:dfs.datanode.ipc.address: 0.0.0.0:9867
+      hdfs:dfs.namenode.handler.count: '60'
+      hdfs:dfs.namenode.http-address: 0.0.0.0:9870
+      hdfs:dfs.namenode.https-address: 0.0.0.0:9871
+      hdfs:dfs.namenode.secondary.http-address: 0.0.0.0:9868
+      hdfs:dfs.namenode.secondary.https-address: 0.0.0.0:9869
+      hdfs:dfs.namenode.service.handler.count: '30'
+      hive:hive.metastore.warehouse.dir: gs://fdev-hive/warehouse
+      mapred-env:HADOOP_JOB_HISTORYSERVER_HEAPSIZE: '4000'
+      mapred:mapreduce.job.maps: '285'
+      mapred:mapreduce.job.reduce.slowstart.completedmaps: '0.95'
+      mapred:mapreduce.job.reduces: '95'
+      mapred:mapreduce.jobhistory.recovery.store.class: org.apache.hadoop.mapreduce.v2.hs.HistoryServerLeveldbStateStoreService
+      mapred:mapreduce.map.cpu.vcores: '1'
+      mapred:mapreduce.map.java.opts: -Xmx3016m
+      mapred:mapreduce.map.memory.mb: '3771'
+      mapred:mapreduce.reduce.cpu.vcores: '1'
+      mapred:mapreduce.reduce.java.opts: -Xmx3016m
+      mapred:mapreduce.reduce.memory.mb: '3771'
+      mapred:mapreduce.task.io.sort.mb: '256'
+      mapred:yarn.app.mapreduce.am.command-opts: -Xmx3016m
+      mapred:yarn.app.mapreduce.am.resource.cpu-vcores: '1'
+      mapred:yarn.app.mapreduce.am.resource.mb: '3771'
+      secondary_worker:t2d-standard-16:distcp:mapreduce.map.java.opts: -Xmx768m
+      secondary_worker:t2d-standard-16:distcp:mapreduce.map.memory.mb: '1024'
+      secondary_worker:t2d-standard-16:distcp:mapreduce.reduce.java.opts: -Xmx768m
+      secondary_worker:t2d-standard-16:distcp:mapreduce.reduce.memory.mb: '1024'
+      secondary_worker:t2d-standard-16:yarn-env:YARN_NODEMANAGER_HEAPSIZE: '4000'
+      secondary_worker:t2d-standard-16:yarn:yarn.nodemanager.resource.cpu-vcores: '16'
+      secondary_worker:t2d-standard-16:yarn:yarn.nodemanager.resource.memory-mb: '60936'
+      spark-env:SPARK_DAEMON_MEMORY: 4000m
+      spark:spark.driver.maxResultSize: 8192m
+      spark:spark.driver.memory: 16384m
+      spark:spark.executor.cores: '8'
+      spark:spark.executor.instances: '2'
+      spark:spark.executor.memory: 27426m
+      spark:spark.executorEnv.OPENBLAS_NUM_THREADS: '1'
+      spark:spark.plugins.defaultList: com.google.cloud.dataproc.DataprocSparkPlugin
+      spark:spark.scheduler.mode: FAIR
+      spark:spark.sql.cbo.enabled: 'true'
+      spark:spark.sql.optimizer.runtime.bloomFilter.join.pattern.enabled: 'true'
+      spark:spark.ui.port: '0'
+      spark:spark.yarn.am.memory: 640m
+      yarn-env:YARN_NODEMANAGER_HEAPSIZE: '4000'
+      yarn-env:YARN_RESOURCEMANAGER_HEAPSIZE: '4000'
+      yarn-env:YARN_TIMELINESERVER_HEAPSIZE: '4000'
+      yarn:yarn.nodemanager.address: 0.0.0.0:8026
+      yarn:yarn.nodemanager.resource.cpu-vcores: '16'
+      yarn:yarn.nodemanager.resource.memory-mb: '60336'
+      yarn:yarn.resourcemanager.decommissioning-nodes-watcher.decommission-if-no-shuffle-data: 'true'
+      yarn:yarn.resourcemanager.nodemanager-graceful-decommission-timeout-secs: '86400'
+      yarn:yarn.scheduler.maximum-allocation-mb: '60336'
+      yarn:yarn.scheduler.minimum-allocation-mb: '1'
+  tempBucket: dataproc-temp-us-central1-1018711634531-ipgpaexp
+  workerConfig:
+    diskConfig:
+      bootDiskSizeGb: 512
+      bootDiskType: pd-ssd
+    imageUri: https://www.googleapis.com/compute/v1/projects/cloud-dataproc/global/images/dataproc-3-0-deb12-20250830-034623-rc01
+    machineTypeUri: https://www.googleapis.com/compute/v1/projects/edl-idaas-fdev-platform-2c85/zones/us-central1-a/machineTypes/t2d-standard-16
+    minCpuPlatform: AUTOMATIC
+    numInstances: 4
+    preemptibility: NON_PREEMPTIBLE
+labels:
+  app: data
+  component: ipaas
+  cost-center: '1048'
+  creator: '35'
+  customer: '500003'
+  environment: fdev
+  gcp_dataproc: gcp_dataproc
+  instance: fdev-indmns1
+  line-of-business: total-neustar-shared
+  name-prefix: w500003-c00003
+  onetru-module: data
+  product: enterprise-data-lake
+  transient: 'true'
+  tru-portfolio: onetru
+  workspace: interns-workspace
